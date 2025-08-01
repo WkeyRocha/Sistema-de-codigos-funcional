@@ -1,0 +1,29 @@
+local digitar = script.Parent:WaitForChild("digitar")
+local clicar = script.Parent:WaitForChild("botaoresgatar")
+local mensagem = script.Parent:WaitForChild("mensagem")
+
+clicar.MouseButton1Click:Connect(function()
+	local codigo = digitar.Text
+
+	if codigo == "" or codigo ==  " " then
+		mensagem.Visible = true
+		mensagem.Text = "Por favor, digite um código válido"
+		spawn(function()
+			wait(2)
+			mensagem.Visible = false
+		end)
+		return
+	end
+
+	if codigo == "MEGA_STUDIOUP!" then
+		mensagem.Visible = true
+		mensagem.Text = "Código resgatado!"
+		spawn(function()
+			wait(2)
+			mensagem.Visible = false
+		end)
+	end
+
+	local remote = game.ReplicatedStorage:WaitForChild("ResgatarCodigo")
+	remote:FireServer(codigo)
+end)
