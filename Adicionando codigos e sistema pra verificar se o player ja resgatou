@@ -1,0 +1,24 @@
+local usado = {}
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local evento = ReplicatedStorage:WaitForChild("ResgatarCodigo")
+----------------------
+evento.OnServerEvent:Connect(function(player, codigodigitado)
+	if usado[player.UserId] then
+		print(player.Name .. " ja usou o codigo")
+		return
+	end
+	print(player.Name .. " enviou o código " .. codigodigitado)
+	local tabela = { ["MEGA_STUDIOUP!"] = 100 }
+	local codigotype = codigodigitado:upper()
+	local ganho = tabela[codigotype]
+	if ganho then
+		print("codigo valido")
+		local leaderstats = player:FindFirstChild("leaderstats")
+		local dinheiro = leaderstats:FindFirstChild("Dinheiro")
+		dinheiro.Value = dinheiro.Value + ganho
+		usado[player.UserId] = true
+	else
+		print("codigo invalidoo")
+	end
+
+end)
